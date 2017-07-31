@@ -24,7 +24,8 @@ def main():
     # transiFeedKey = getTransitFeedsKey()
     endpoints = getGtfsRtEndpoints()
     data = map(getVehiclePositions, endpoints)
-
+    for v in data:
+        print(v)
 
 
 main()
