@@ -1,9 +1,8 @@
 # Get list of GTFS-RT vehicle-position feeds from TransitFeeds and save it in mongodb
 
 
-
 from VehiclePositions_GTFS_RT import getVehiclePositions
-
+from mongo_helper import insertVehicles
 
 #def getTransitFeedsKey():
 #    config = configparser.ConfigParser()
@@ -18,14 +17,15 @@ from VehiclePositions_GTFS_RT import getVehiclePositions
 
 # Get GTFS-RT endpoints from the Transit Feeds
 def getGtfsRtEndpoints():
-    return ["http://192.237.29.212:8080/gtfsrealtime/VehiclePositions"]
+    return [
+        "http://192.237.29.212:8080/gtfsrealtime/VehiclePositions",
+        "http://gtfs.translink.ca/gtfsposition?apikey=nVhpsz4sxmabMQRo67eK"
+    ]
 
-def main():
+def getTransistate():
     # transiFeedKey = getTransitFeedsKey()
     endpoints = getGtfsRtEndpoints()
-    data = map(getVehiclePositions, endpoints)
-    for v in data:
-        print(v)
-
-
-main()
+    waterlooData = getVehiclePositions(endpoints[0])
+    vancouverData = getVehiclePositions(endpoints[1])
+    insertVehicles(waterlooData, "GRT_Waterloo")
+    insertVehicles(vancouverData, "Translink_Vancouver")
