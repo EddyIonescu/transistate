@@ -2,7 +2,6 @@
 
 from google.transit import gtfs_realtime_pb2
 import requests
-import pymongo
 
 def getVehiclePositions(link):
     feed = gtfs_realtime_pb2.FeedMessage()

@@ -2,7 +2,6 @@ import configparser
 from pymongo import MongoClient
 import time
 import math
-import json
 
 def getAuth():
     config = configparser.ConfigParser()
@@ -10,17 +9,20 @@ def getAuth():
     config = (config["mongo"]["username"], config["mongo"]["password"])
     return config
 
+
 def connect():
     auth = getAuth()
     client = MongoClient('mongodb://' + auth[0] + ':' + auth[1] + '@54.183.239.250')
     db = client.transistate
     return db
 
+
 def vehicleAsMap(vehicle, agency):
     return {
         "agency": agency,
         "tripId": vehicle.trip.trip_id,
         "location": {
+            # GeoJson for mongo - https://docs.mongodb.com/manual/reference/geojson/#geojson-point
             "type": "Point",
             "coordinates": [vehicle.position.longitude, vehicle.position.latitude],
         },
@@ -30,6 +32,7 @@ def vehicleAsMap(vehicle, agency):
             "label": vehicle.vehicle.label,
         }
     }
+
 
 def insertVehicles(vehicles, agency):
     if len(vehicles):

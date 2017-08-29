@@ -1,8 +1,9 @@
 # Get list of GTFS-RT vehicle-position feeds from TransitFeeds and save it in mongodb
 
 
-from VehiclePositions_GTFS_RT import getVehiclePositions
-from mongo_helper import insertVehicles
+from Helpers.fetchVehiclePositions import getVehiclePositions
+from Helpers.mongoHelper import insertVehicles
+
 
 #def getTransitFeedsKey():
 #    config = configparser.ConfigParser()
