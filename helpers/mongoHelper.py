@@ -12,7 +12,7 @@ def getAuth():
 
 def connect():
     auth = getAuth()
-    client = MongoClient('mongodb://' + auth[0] + ':' + auth[1] + '@172.31.11.38')
+    client = MongoClient('mongodb://' + auth[0] + ':' + auth[1] + '@54.183.239.250')
     db = client.transistate
     return db
 
@@ -21,6 +21,10 @@ def vehicleAsMap(vehicle, agency):
     return {
         "agency": agency,
         "trip_id": vehicle.trip.trip_id,
+        "route_id": vehicle.trip.route_id,
+        "current_status": vehicle.current_status,
+        "current_stop_sequence": vehicle.current_stop_sequence,
+        "stop_id": vehicle.stop_id,
         "location": {
             # GeoJson for mongo - https://docs.mongodb.com/manual/reference/geojson/#geojson-point
             "type": "Point",

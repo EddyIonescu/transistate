@@ -8,6 +8,7 @@ def getVehiclePositions(link):
     try:
         response = requests.get(link)
         feed.ParseFromString(response.content)
+        print(feed.entity)
         return feed.entity
     except:
         return []

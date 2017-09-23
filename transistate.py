@@ -3,8 +3,8 @@
 
 # TODO fetch realtime endpoints and other agency info using the transiagency service
 
-from Helpers.fetchVehiclePositions import getVehiclePositions
-from Helpers.mongoHelper import insertVehicles
+from helpers.fetchVehiclePositions import getVehiclePositions
+from helpers.mongoHelper import insertVehicles
 
 def getGtfsRtEndpoints():
     return [
