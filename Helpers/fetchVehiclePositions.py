@@ -1,4 +1,4 @@
-# add vehicles-transistate table based on all gtfs-rt feeds
+# add transistate table based on all gtfs-rt feeds
 
 from google.transit import gtfs_realtime_pb2
 import requests

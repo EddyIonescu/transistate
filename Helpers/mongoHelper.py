@@ -1,7 +1,7 @@
 import configparser
+
+import logging
 from pymongo import MongoClient
-import time
-import math
 
 def getAuth():
     config = configparser.ConfigParser()
@@ -12,7 +12,7 @@ def getAuth():
 
 def connect():
     auth = getAuth()
-    client = MongoClient('mongodb://' + auth[0] + ':' + auth[1] + '@54.183.239.250')
+    client = MongoClient('mongodb://' + auth[0] + ':' + auth[1] + '@172.31.11.38')
     db = client.transistate
     return db
 
@@ -20,24 +20,24 @@ def connect():
 def vehicleAsMap(vehicle, agency):
     return {
         "agency": agency,
-        "tripId": vehicle.trip.trip_id,
+        "trip_id": vehicle.trip.trip_id,
         "location": {
             # GeoJson for mongo - https://docs.mongodb.com/manual/reference/geojson/#geojson-point
             "type": "Point",
             "coordinates": [vehicle.position.longitude, vehicle.position.latitude],
         },
         "timestamp": vehicle.timestamp,
-        "vehicle": {
-            "id": vehicle.vehicle.id,
-            "label": vehicle.vehicle.label,
-        }
+        "vehicle_id": vehicle.vehicle.id,
+        "vehicle_label": vehicle.vehicle.label,
     }
 
 
-def insertVehicles(vehicles, agency):
+def insertVehicles(vehicles, agency, timeName):
+    logging.info(vehicles)
+    logging.info(agency)
+    logging.info(timeName)
     if len(vehicles):
         db = connect()
         vehicles = [vehicleAsMap(v.vehicle, agency) for v in vehicles]
-        timeName = str(math.floor(time.time()))
         collection = db[timeName]
         return collection.insert_many(vehicles)
