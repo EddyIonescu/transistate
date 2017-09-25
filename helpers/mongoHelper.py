@@ -12,7 +12,7 @@ def getAuth():
 
 def connect():
     auth = getAuth()
-    client = MongoClient('mongodb://' + auth[0] + ':' + auth[1] + '@54.183.239.250')
+    client = MongoClient('mongodb://' + auth[0] + ':' + auth[1] + '@54.183.241.195')
     db = client.transistate
     return db
 
