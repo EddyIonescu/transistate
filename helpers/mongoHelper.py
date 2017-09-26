@@ -17,9 +17,8 @@ def connect():
     return db
 
 
-def vehicleAsMap(vehicle, agency, timeName):
+def vehicleAsMap(vehicle, timeName):
     return {
-        "agency": agency,
         "trip_id": vehicle.trip.trip_id,
         "route_id": vehicle.trip.route_id,
         "current_status": vehicle.current_status,
@@ -41,8 +40,7 @@ def insertVehicles(vehicles, agency, timeName):
     logging.info(vehicles)
     logging.info(agency)
     logging.info(timeName)
-    collectionName = "v1"
     if len(vehicles):
         db = connect()
         vehicles = [vehicleAsMap(v.vehicle, agency, timeName) for v in vehicles]
-        return db[collectionName].insert_many(vehicles)
+        return db[agency].insert_many(vehicles)
